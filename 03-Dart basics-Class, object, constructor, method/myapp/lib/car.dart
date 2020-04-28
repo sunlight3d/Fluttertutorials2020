@@ -25,5 +25,12 @@ class Car {
   }
   void doSomething(){
     print('I am doing something...');
+    this.handleEvent();
   }
+  //method with named arguments ?
+  void sayHello({String personName}){
+    print('Hello $personName');
+  }
+  //function as "a variable"
+  Function handleEvent;
 }

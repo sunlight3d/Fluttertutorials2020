@@ -20,7 +20,13 @@ void main(){
     var myCar = Car(
         name:'Mercedes-Maybach S-Class Saloon',
         yearOfProduction: 2021); //Flutter style
+
+    myCar.handleEvent = (){
+        print("Handle in main");
+    };
     myCar.doSomething();
+    myCar.sayHello(personName: 'Hoang');
+
     runApp(
         Center(child: Text(
             '${myCar.toString()}',
