@@ -9,29 +9,35 @@ class DetailFoodPage extends StatelessWidget {
   Widget build(BuildContext context) {
     // TODO: implement build
     return Scaffold(
-      body: Container(
-        width: double.infinity,
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.center,
-          children: <Widget>[
-            Center(
-                child: FadeInImage.assetNetwork(
-                  placeholder: 'assets/images/loading.gif',
-                  image: food.urlImage,
-                )
-            ),
-            Text('Ingredients', style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),),
-            ListView.builder(
+      appBar: AppBar(
+        title: Text('${food.name}'),
+      ),
+      body: Column(
+        mainAxisAlignment: MainAxisAlignment.start,
+        crossAxisAlignment: CrossAxisAlignment.center,
+        children: <Widget>[
+          Center(
+              child: FadeInImage.assetNetwork(
+                placeholder: 'assets/images/loading.gif',
+                image: food.urlImage,
+              )
+          ),
+          Text('Ingredients', style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),),
+          Expanded(
+            child: ListView.builder(
+                itemCount: this.food.ingredients.length,
                 itemBuilder: (context, index) {
                   String ingredient = this.food.ingredients[index];
                   return ListTile(
-                    leading: CircleAvatar(child: Text('$index'),),
-                    title: Text(ingredient, style: TextStyle(fontSize: 16),),
+                    leading: CircleAvatar(
+                      child: Text('\#${index + 1}', style:
+                        TextStyle(fontSize: 20, color: Colors.white),),
+                      backgroundColor: Colors.redAccent,),
+                    title: Text(ingredient, style: TextStyle(fontSize: 18),),
                   );
                 }
-            )
-          ],
-        ),
+            ),
+          ),        ],
       ),
     );
   }
