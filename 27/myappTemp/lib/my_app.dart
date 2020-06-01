@@ -1,9 +1,15 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:myappTemp/bloc/persons_bloc.dart';
+import 'package:myappTemp/bloc/persons_events.dart';
+import 'package:myappTemp/models/person.dart';
 
 class MyApp extends StatelessWidget {
-  // This widget is the root of your application.
+  final _textEditingControllerName = TextEditingController();
+  final _textEditingControllerEmail = TextEditingController();
   @override
   Widget build(BuildContext context) {
+    final PersonsBloc personsBloc = BlocProvider.of<PersonsBloc>(context);
     return MaterialApp(
       title: 'Flutter Demo',
       theme: ThemeData(
@@ -22,13 +28,15 @@ class MyApp extends StatelessWidget {
                       border: OutlineInputBorder(),
                       labelText: 'Enter name',
                     ),
+                    controller: _textEditingControllerName,
                   ),
                   SizedBox(height: 20,),
                   TextField(
-                    decoration: InputDecoration(
-                      border: OutlineInputBorder(),
-                      labelText: 'Enter email',
-                    ),
+                      controller: _textEditingControllerEmail,
+                      decoration: InputDecoration(
+                        border: OutlineInputBorder(),
+                        labelText: 'Enter email',
+                      ),
                   ),
                   SizedBox(height: 20,),
                   Row(
@@ -49,7 +57,12 @@ class MyApp extends StatelessWidget {
                         textColor: Colors.white,
                         color: Colors.redAccent,
                         onPressed: () {
-
+                          personsBloc.add(EventInsertPerson(
+                              newPerson: Person(
+                                  name: _textEditingControllerName.text,
+                                  email: _textEditingControllerEmail.text,
+                              ))
+                          );
                         },
                         child: new Text("Delete", style: TextStyle(fontSize: 22),),
                       ),
@@ -73,4 +86,5 @@ class MyApp extends StatelessWidget {
           ))
     );
   }
+
 }
