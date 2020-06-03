@@ -11,7 +11,7 @@ class PersonsBloc extends Bloc<PersonsEvent, PersonsState> {
   Stream<PersonsState> mapEventToState(PersonsEvent event) async* {
     if(event is EventInsertPerson) {
       final List<Person> updatedPersons =
-        List.from((state as PersonsState).persons)..add(event.newPerson);
+      List.from((state as PersonsState).persons)..add(event.newPerson);
       yield PersonsState(persons: updatedPersons);
     } else if(event is EventEditPerson) {
       final List<Person> updatedPersons =
@@ -20,9 +20,10 @@ class PersonsBloc extends Bloc<PersonsEvent, PersonsState> {
         }).toList();
       yield PersonsState(persons: updatedPersons);
     } else if(event is EventDeletePerson) {
+      var selectedPerson = (state as PersonsState).selectedPerson;
       final List<Person> updatedPersons =
       (state as PersonsState).persons
-          .where((person) => person.id != event.id)
+          .where((person) => person.id != selectedPerson.id)
           .toList();
       yield PersonsState(persons: updatedPersons);
     }

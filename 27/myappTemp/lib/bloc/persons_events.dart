@@ -1,11 +1,8 @@
 import 'package:myappTemp/models/person.dart';
 import 'package:equatable/equatable.dart';
 
-abstract class PersonsEvent extends Equatable {
+abstract class PersonsEvent{
   const PersonsEvent();
-
-  @override
-  List<Object> get props => [];
 }
 
 class EventInsertPerson extends PersonsEvent{
@@ -30,11 +27,18 @@ class EventEditPerson extends PersonsEvent{
 }
 class EventDeletePerson extends PersonsEvent{
   //properties = event's params
-  final int id;
-  const EventDeletePerson({this.id});
+  const EventDeletePerson();
   @override
   String toString() {
     // TODO: implement toString
-    return 'EventDeletePerson, params : $id';
+    return 'EventDeletePerson';
+  }
+}
+class EventSelectPerson extends PersonsEvent {
+  final Person selectedPerson;
+  const EventSelectPerson({this.selectedPerson});
+  @override
+  String toString() {
+    return 'EventSelectPerson, params : $selectedPerson';
   }
 }
