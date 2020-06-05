@@ -26,6 +26,10 @@ class PersonsBloc extends Bloc<PersonsEvent, PersonsState> {
           .where((person) => person.id != selectedPerson.id)
           .toList();
       yield PersonsState(persons: updatedPersons);
+    } else if(event is EventSelectPerson) {
+      PersonsState newState = PersonsState(persons: (state as PersonsState).persons);
+      newState.selectedPerson = event.selectedPerson;
+      yield newState;
     }
   }
 }

@@ -33,8 +33,10 @@ class MyApp extends StatelessWidget {
                       builder: (context, state){
                         var selectedPerson = (state as PersonsState).selectedPerson;
                         if(selectedPerson != null) {
-                          _textEditingControllerName.text = selectedPerson.name;
-                          _textEditingControllerEmail.text = selectedPerson.email;
+                          setState(){
+                            _textEditingControllerName.text = selectedPerson.name;
+                            _textEditingControllerEmail.text = selectedPerson.email;
+                          }
                         }
                         return TextField(
                           decoration: InputDecoration(
