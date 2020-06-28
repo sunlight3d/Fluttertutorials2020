@@ -16,4 +16,13 @@ class CommentStateSuccess extends CommentState{
   const CommentStateSuccess({this.comments, this.hasReachedEnd});
   @override
   String toString() => "comments: $comments, has reached end: $hasReachedEnd";
+  //Define a function which clone CommentStateSuccess's object
+  CommentStateSuccess cloneWith({
+    List<Comment> comments, bool hasReachedEnd
+  }) {
+    return CommentStateSuccess(
+      comments: comments ?? this.comments,
+      hasReachedEnd: hasReachedEnd ?? this.hasReachedEnd
+    );
+  }
 }

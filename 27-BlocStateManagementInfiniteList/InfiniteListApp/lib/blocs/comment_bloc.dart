@@ -11,7 +11,7 @@ class CommentBloc extends Bloc<CommentEvent, CommentState> {
   CommentState get initialState => CommentStateInitial();
   @override
   Stream<CommentState> mapEventToState(CommentEvent event) async*{
-    //now check your event ?
+    //Now update your UI !
     if(event is CommentFetchedEvent &&
         !(state is CommentStateSuccess && (state as CommentStateSuccess).hasReachedEnd))
       {
@@ -24,7 +24,17 @@ class CommentBloc extends Bloc<CommentEvent, CommentState> {
               hasReachedEnd: false
             );
           } else if(state is CommentStateSuccess) {
-
+            int currentPage = (state as CommentStateSuccess).comments.length;
+            final comments = await this._getCommentsFromApi(currentPage, 20);
+            if(comments.isEmpty) {
+              yield (state as CommentStateSuccess).cloneWith(hasReachedEnd: true);
+            } else {
+              //not scroll to end !
+              yield CommentStateSuccess(
+                comments: (state as CommentStateSuccess).comments + comments,
+                hasReachedEnd: false
+              );
+            }
           }
         }catch(_) {
           yield CommentStateFailure();
@@ -34,23 +44,26 @@ class CommentBloc extends Bloc<CommentEvent, CommentState> {
   }
   Future< List<Comment> >_getCommentsFromApi(int page, int limit) async{
     final url = 'https://jsonplaceholder.typicode.com/comments?_start=$page&_limit=$limit';
-    this.httpClient.get(url).then((response) {
-      if(response.statusCode == 200) {
-        final responseData = json.decode(response.body) as List;
-        final List<Comment> comments = responseData.map((element){
-          return Comment(
-              id: element['id'],
-              name: element['name'],
-              email: element['email'],
-              body: element['body']
-          );
-        }).toList();
-        return comments;
-      } else {
-        //failed
-        return List<Comment>();
-      }
-    });
-    //In Order to use Bloc, use must define Event, State, Bloc,...
+    try {
+      this.httpClient.get(url).then((response) {
+        if(response.statusCode == 200) {
+          final responseData = json.decode(response.body) as List;
+          final List<Comment> comments = responseData.map((element){
+            return Comment(
+                id: element['id'],
+                name: element['name'],
+                email: element['email'],
+                body: element['body']
+            );
+          }).toList();
+          return comments;
+        } else {
+          //failed
+          return List<Comment>();
+        }
+      });
+    } catch(_) {
+      return List<Comment>();
+    }
   }
 }
