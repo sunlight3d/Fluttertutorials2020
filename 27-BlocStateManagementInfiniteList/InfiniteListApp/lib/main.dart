@@ -15,10 +15,7 @@ class MyApp extends StatelessWidget {
     return MaterialApp(
       title: 'Flutter Demo',
       home: BlocProvider(
-        create: (context){
-          final commentBloc = CommentBloc();
-          commentBloc.add(CommentFetchedEvent);
-        },
+        create: (context) => CommentBloc()..add(CommentFetchedEvent()),
         child: InfiniteList(),
       )
     );

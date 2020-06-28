@@ -62,11 +62,17 @@ class _InfiniteList extends State<InfiniteList> {
                       return ListTile(
                         leading: Text(
                             '${currentState.comments[index].id}',
-                          style: TextStyle(fontSize: 15),
+                          style: TextStyle(fontSize: 23, fontWeight: FontWeight.bold),
                         ),
-                        title: Text('${currentState.comments[index].id}'),
+                        title: Text(
+                            '${currentState.comments[index].email}',
+                          style: TextStyle(fontSize: 20),
+                        ),
                         isThreeLine: true,
-                        subtitle: Text('${currentState.comments[index].body}'),
+                        subtitle: Text(
+                            '${currentState.comments[index].body}',
+                          style: TextStyle(fontSize: 20),
+                        ),
                         dense: true,
                       );
                     }
