@@ -1,4 +1,5 @@
 import 'package:InfiniteListApp/blocs/comment_bloc.dart';
+import 'package:InfiniteListApp/events/comment_events.dart';
 import 'package:InfiniteListApp/states/CommentState.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -10,7 +11,7 @@ class _InfiniteList extends State<InfiniteList> {
   CommentBloc _commentBloc;
   //scrollController
   final _scrollController = ScrollController();
-  final _scrollThreshold = 300.0;
+  final _scrollThreshold = 250.0;
   @override
   void initState() {
     // TODO: implement initState
@@ -19,7 +20,19 @@ class _InfiniteList extends State<InfiniteList> {
     _scrollController.addListener(_onScroll);
   }
   _onScroll(){
-
+    //we need to add code here
+    final maxScrollExtent = _scrollController.position.maxScrollExtent;
+    final currentScroll = _scrollController.position.pixels;
+    if (maxScrollExtent - currentScroll <= _scrollThreshold) {
+      _commentBloc.add(CommentFetchedEvent());
+      //It means "call this many times !"
+    }
+  }
+  @override
+  void dispose() {
+    // TODO: implement dispose
+    super.dispose();
+    _scrollController.dispose();
   }
   @override
   Widget build(BuildContext context) {
@@ -76,7 +89,11 @@ class _InfiniteList extends State<InfiniteList> {
                         dense: true,
                       );
                     }
-                  }
+                  },
+                itemCount: currentState.hasReachedEnd ?
+                            currentState.comments.length :
+                            currentState.comments.length + 1,
+                controller: _scrollController,
               );
             }
             return null;//never run this line !

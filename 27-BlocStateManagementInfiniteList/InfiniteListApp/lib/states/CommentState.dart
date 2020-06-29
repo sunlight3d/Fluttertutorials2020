@@ -25,4 +25,7 @@ class CommentStateSuccess extends CommentState{
       hasReachedEnd: hasReachedEnd ?? this.hasReachedEnd
     );
   }
+  @override
+  // TODO: implement props
+  List<Object> get props => [comments, hasReachedEnd];
 }

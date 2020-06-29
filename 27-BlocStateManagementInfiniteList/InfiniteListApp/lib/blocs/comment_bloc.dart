@@ -4,6 +4,7 @@ import 'package:InfiniteListApp/states/CommentState.dart';
 import 'package:bloc/bloc.dart';
 import 'package:http/http.dart' as http;
 import 'dart:convert';
+import 'package:rxdart/rxdart.dart';
 
 class CommentBloc extends Bloc<CommentEvent, CommentState> {
   final http.Client httpClient = http.Client();
@@ -30,6 +31,8 @@ class CommentBloc extends Bloc<CommentEvent, CommentState> {
               yield (state as CommentStateSuccess).cloneWith(hasReachedEnd: true);
             } else {
               //not scroll to end !
+              //not reload UI, why ?
+              //Because "new state" like "old state" !
               yield CommentStateSuccess(
                 comments: (state as CommentStateSuccess).comments + comments,
                 hasReachedEnd: false
@@ -64,5 +67,14 @@ class CommentBloc extends Bloc<CommentEvent, CommentState> {
     } catch(_) {
       return List<Comment>();
     }
+  }
+  @override
+  Stream<Transition<CommentEvent, CommentState>> transformEvents(
+      Stream<CommentEvent> events, transitionFn) {
+    //500ms delay after transition ?
+    //Use rxdart !
+    return super.transformEvents(
+        events.debounceTime(const Duration(milliseconds: 500)),
+        transitionFn);
   }
 }
