@@ -1,6 +1,9 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:loginwithbloc/blocs/login_bloc.dart';
+import 'package:loginwithbloc/events/login_event.dart';
 import 'package:loginwithbloc/repositories/user_repository.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 
 class LoginPage extends StatefulWidget {
   //because it has TextField(input email, password)
@@ -30,8 +33,11 @@ class _LoginPage extends State<LoginPage> {
           ),
           RaisedButton(
             onPressed: () {
-              //add event to Bloc, but where is my "Login Bloc" ?
-              //We must have LoginEvent, LoginState, LoginBloc...
+              final loginBloc = BlocProvider.of<LoginBloc>(context);
+              loginBloc.add(LoginEventButtonPressed(
+                email: _emailController.text,
+                password: _passwordController.text,
+              ));
             },
             child: Text('Login', style: TextStyle(fontSize: 18),),
           )
