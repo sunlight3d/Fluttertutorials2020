@@ -1,5 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:loginwithbloc/blocs/authentication_bloc.dart';
 import 'package:loginwithbloc/blocs/login_bloc.dart';
 import 'package:loginwithbloc/events/login_event.dart';
 import 'package:loginwithbloc/repositories/user_repository.dart';
@@ -21,32 +22,55 @@ class _LoginPage extends State<LoginPage> {
   final _passwordController = TextEditingController();
   @override
   Widget build(BuildContext context) {
-    return BlocBuilder<LoginBloc, LoginState>(
-      builder: (context, state) {
-        return Form(
-          child: Column(
-            children: <Widget>[
-              TextFormField(
-                decoration: InputDecoration(labelText: 'email'),
-                controller: _emailController,
-              ),
-              TextFormField(
-                decoration: InputDecoration(labelText: 'password'),
-                controller: _passwordController,
-              ),
-              RaisedButton(
-                onPressed: () {
-                  BlocProvider.of<LoginBloc>(context).add(LoginEventButtonPressed(
-                    email: _emailController.text,
-                    password: _passwordController.text,
-                  ));
-                },
-                child: Text('Login', style: TextStyle(fontSize: 18),),
-              )
-            ],
-          ),
+    return BlocProvider(
+      create: (context){
+        final loginBloc = LoginBloc(
+          authenticationBloc: BlocProvider.of<AuthenticationBloc>(context),
+          userRepository: widget.userRepository
         );
+        return loginBloc;
       },
+      child: BlocBuilder<LoginBloc, LoginState>(
+        builder: (context, state) {
+          return Scaffold(
+            body: SafeArea(
+              child: Container(
+                child: Form(
+                  child: Column(
+                    children: <Widget>[
+                      TextFormField(
+                        decoration: InputDecoration(labelText: 'email'),
+                        controller: _emailController,
+                      ),
+                      TextFormField(
+                        decoration: InputDecoration(labelText: 'password'),
+                        controller: _passwordController,
+                      ),
+                      Container(
+                        child: SizedBox(
+                          width: 200, height: 45,
+                          child: RaisedButton(
+                            color: Colors.blue,
+                            onPressed: () {
+                              BlocProvider.of<LoginBloc>(context).add(LoginEventButtonPressed(
+                                email: _emailController.text,
+                                password: _passwordController.text,
+                              ));
+                            },
+                            child: Text('Login', style: TextStyle(fontSize: 18, color: Colors.white),),
+                          ),
+                        ),
+                        padding: EdgeInsets.symmetric(vertical: 20),
+                      )
+                    ],
+                  ),
+                ),
+                padding: EdgeInsets.all(20),
+              ),
+            )
+          );
+        },
+      ),
     );
   }
 }

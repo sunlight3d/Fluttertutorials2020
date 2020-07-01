@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:loginwithbloc/blocs/authentication_bloc.dart';
 import 'package:loginwithbloc/events/authentication_event.dart';
+import 'package:loginwithbloc/pages/home_page.dart';
 import 'package:loginwithbloc/pages/login_page.dart';
 import 'package:loginwithbloc/pages/splash.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -30,11 +31,15 @@ class MyApp extends StatelessWidget {
           builder: (context, state) {
             if(state is AuthenticationStateSuccess) {
               //show HomePage
+              return HomePage();
             } else if(state is AuthenticationStateFailed) {
               //show LoginPage
               return LoginPage(userRepository: _userRepository);
             } else if(state is AuthenticationStateInProgress) {
               //show LoadingPage
+              return Center(
+                child: CircularProgressIndicator(),
+              );
             }
             return Splash();
           },
