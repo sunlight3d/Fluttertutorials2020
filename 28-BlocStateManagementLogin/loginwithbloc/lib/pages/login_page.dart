@@ -4,6 +4,7 @@ import 'package:loginwithbloc/blocs/login_bloc.dart';
 import 'package:loginwithbloc/events/login_event.dart';
 import 'package:loginwithbloc/repositories/user_repository.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:loginwithbloc/states/login_state.dart';
 
 class LoginPage extends StatefulWidget {
   //because it has TextField(input email, password)
@@ -20,29 +21,32 @@ class _LoginPage extends State<LoginPage> {
   final _passwordController = TextEditingController();
   @override
   Widget build(BuildContext context) {
-    return Form(
-      child: Column(
-        children: <Widget>[
-          TextFormField(
-            decoration: InputDecoration(labelText: 'email'),
-            controller: _emailController,
+    return BlocBuilder<LoginBloc, LoginState>(
+      builder: (context, state) {
+        return Form(
+          child: Column(
+            children: <Widget>[
+              TextFormField(
+                decoration: InputDecoration(labelText: 'email'),
+                controller: _emailController,
+              ),
+              TextFormField(
+                decoration: InputDecoration(labelText: 'password'),
+                controller: _passwordController,
+              ),
+              RaisedButton(
+                onPressed: () {
+                  BlocProvider.of<LoginBloc>(context).add(LoginEventButtonPressed(
+                    email: _emailController.text,
+                    password: _passwordController.text,
+                  ));
+                },
+                child: Text('Login', style: TextStyle(fontSize: 18),),
+              )
+            ],
           ),
-          TextFormField(
-            decoration: InputDecoration(labelText: 'password'),
-            controller: _passwordController,
-          ),
-          RaisedButton(
-            onPressed: () {
-              final loginBloc = BlocProvider.of<LoginBloc>(context);
-              loginBloc.add(LoginEventButtonPressed(
-                email: _emailController.text,
-                password: _passwordController.text,
-              ));
-            },
-            child: Text('Login', style: TextStyle(fontSize: 18),),
-          )
-        ],
-      ),
+        );
+      },
     );
   }
 }
