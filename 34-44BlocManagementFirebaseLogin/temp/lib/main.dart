@@ -8,10 +8,7 @@ import 'package:flutter_firebase_login/login/login.dart';
 import 'package:flutter_firebase_login/splash_screen.dart';
 import 'package:flutter_firebase_login/simple_bloc_observer.dart';
 
-void main() {
-  WidgetsFlutterBinding.ensureInitialized();
-  Bloc.observer = SimpleBlocObserver();
-  final UserRepository userRepository = UserRepository();
+void main() {  
   runApp(
     BlocProvider(
       create: (context) => AuthenticationBloc(
