@@ -44,7 +44,12 @@ class _LoginPageState extends State<LoginPage> {
     _emailController.addListener(_onEmailChanged);
     _passwordController.addListener(_onPasswordChanged);
   }
-
+  /*
+  BlocProvider<LoginBloc>(
+  create: (context) => LoginBloc(userRepository: _userRepository),
+  child:
+  )
+  */
   @override
   Widget build(BuildContext context) {
     return BlocListener<LoginBloc, LoginState>(
@@ -54,7 +59,7 @@ class _LoginPageState extends State<LoginPage> {
             ..hideCurrentSnackBar()
             ..showSnackBar(
               SnackBar(
-                content: Text('Login Failed')
+                  content: Text('Login Failed')
               ),
             );
         }
@@ -74,57 +79,59 @@ class _LoginPageState extends State<LoginPage> {
       },
       child: BlocBuilder<LoginBloc, LoginState>(
         builder: (context, state) {
-          return Padding(
-            padding: EdgeInsets.all(20.0),
-            child: Form(
-              child: ListView(
-                children: <Widget>[
-                  Padding(
-                    padding: EdgeInsets.symmetric(vertical: 20),
-                    child: Image.asset('assets/flutter_logo.png', height: 200),
-                  ),
-                  TextFormField(
-                    controller: _emailController,
-                    decoration: InputDecoration(
-                      icon: Icon(Icons.email),
-                      labelText: 'Email',
+          return Scaffold(
+            body: Padding(
+              padding: EdgeInsets.all(20.0),
+              child: Form(
+                child: ListView(
+                  children: <Widget>[
+                    Padding(
+                      padding: EdgeInsets.symmetric(vertical: 20),
+                      child: Image.asset('assets/flutter_logo.png', height: 200),
                     ),
-                    keyboardType: TextInputType.emailAddress,
-                    autovalidate: true,
-                    autocorrect: false,
-                    validator: (_) {
-                      return !state.isValidEmail ? 'Invalid Email' : null;
-                    },
-                  ),
-                  TextFormField(
-                    controller: _passwordController,
-                    decoration: InputDecoration(
-                      icon: Icon(Icons.lock),
-                      labelText: 'Password',
+                    TextFormField(
+                      controller: _emailController,
+                      decoration: InputDecoration(
+                        icon: Icon(Icons.email),
+                        labelText: 'Email',
+                      ),
+                      keyboardType: TextInputType.emailAddress,
+                      autovalidate: true,
+                      autocorrect: false,
+                      validator: (_) {
+                        return !state.isValidEmail ? 'Invalid Email' : null;
+                      },
                     ),
-                    obscureText: true,
-                    autovalidate: true,
-                    autocorrect: false,
-                    validator: (_) {
-                      return !state.isValidPassword ? 'Invalid Password' : null;
-                    },
-                  ),
-                  Padding(
-                    padding: EdgeInsets.symmetric(vertical: 20),
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.stretch,
-                      children: <Widget>[
-                        LoginButton(
-                          onPress: isLoginButtonEnabled(state)
-                              ? _onPageSubmitted
-                              : null,
-                        ),
-                        GoogleLoginButton(),
-                        RegisterUserButton(userRepository: _userRepository),
-                      ],
+                    TextFormField(
+                      controller: _passwordController,
+                      decoration: InputDecoration(
+                        icon: Icon(Icons.lock),
+                        labelText: 'Password',
+                      ),
+                      obscureText: true,
+                      autovalidate: true,
+                      autocorrect: false,
+                      validator: (_) {
+                        return !state.isValidPassword ? 'Invalid Password' : null;
+                      },
                     ),
-                  ),
-                ],
+                    Padding(
+                      padding: EdgeInsets.symmetric(vertical: 20),
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.stretch,
+                        children: <Widget>[
+                          LoginButton(
+                            onPress: isLoginButtonEnabled(state)
+                                ? _onPageSubmitted
+                                : null,
+                          ),
+                          GoogleLoginButton(),
+                          RegisterUserButton(userRepository: _userRepository),
+                        ],
+                      ),
+                    ),
+                  ],
+                ),
               ),
             ),
           );

@@ -8,6 +8,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:firebaseLogin/blocs/authentication_bloc.dart';
 
+import 'blocs/login_bloc.dart';
 import 'blocs/simple_bloc_observer.dart';
 
 void main() {
@@ -30,7 +31,10 @@ class MyApp extends StatelessWidget {
         child: BlocBuilder<AuthenticationBloc, AuthenticationState>(
           builder: (context, state){
             if (state is AuthenticationStateFailure) {
-              return LoginPage(userRepository: userRepository);
+              return BlocProvider<LoginBloc>(
+                create: (context) => LoginBloc(userRepository: userRepository),
+                child: LoginPage(userRepository: userRepository)
+              );
             }else if (state is AuthenticationStateSuccess) {
               return HomePage(firebaseUser: state.firebaseUser);
             }
