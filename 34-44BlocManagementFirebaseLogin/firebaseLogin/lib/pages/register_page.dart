@@ -32,90 +32,64 @@ class _RegisterPage extends State<RegisterPage> {
   bool isRegisterButtonEnabled(RegisterState state) {
     return state.isValidForm && isPopulated && !state.isSubmitting;
   }
-
+  @override
+  void initState() {
+    super.initState();
+    _registerBloc = BlocProvider.of<RegisterBloc>(context);;
+  }
 
   @override
   Widget build(BuildContext context) {
+
     return Scaffold(
       appBar: AppBar(title: Text('Register')),
       body: Center(
         child: BlocProvider<RegisterBloc>(
           create: (context) => RegisterBloc(userRepository: _userRepository),
-          child: BlocListener<RegisterBloc, RegisterState>(
-            listener: (context, state) {
-              if (state.isSubmitting) {
-                Scaffold.of(context)
-                  ..hideCurrentSnackBar()
-                  ..showSnackBar(
-                    SnackBar(
-                      content: Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                        children: [
-                          Text('Registering...'),
-                          CircularProgressIndicator(),
-                        ],
-                      ),
-                    ),
-                  );
+          child: BlocBuilder<RegisterBloc, RegisterState>(
+            builder: (context, registerState) {
+              if (registerState.isFailure) {
+                print('Registration Failed');
+              } else if (registerState.isSubmitting) {
+                print('Registration in progress...');
+              } else if (registerState.isSuccess) {
+                BlocProvider.of<AuthenticationBloc>(context).add(AuthenticationEventLoggedIn());
               }
-              if (state.isSuccess) {
-                BlocProvider.of<AuthenticationBloc>(context)
-                    .add(AuthenticationEventLoggedIn());
-                Navigator.of(context).pop();
-              }
-              if (state.isFailure) {
-                Scaffold.of(context)
-                  ..hideCurrentSnackBar()
-                  ..showSnackBar(
-                    SnackBar(
-                      content: Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                        children: [
-                          Text('Registration Failure'),
-                          Icon(Icons.error),
-                        ],
-                      ),
-                      backgroundColor: Colors.red,
-                    ),
-                  );
-              }
-            },
-            child: BlocBuilder<RegisterBloc, RegisterState>(
-              builder: (context, state) {
-                return Padding(
-                  padding: EdgeInsets.all(20),
-                  child: Form(
-                    child: ListView(
-                      children: <Widget>[
-                        TextFormField(
-                          controller: _emailController,
-                          decoration: InputDecoration(
-                            icon: Icon(Icons.email),
-                            labelText: 'Email',
-                          ),
-                          keyboardType: TextInputType.emailAddress,
-                          autocorrect: false,
-                          autovalidate: true,
-                          validator: (_) {
-                            return !state.isValidEmail ? 'Invalid Email' : null;
-                          },
+              return Padding(
+                padding: EdgeInsets.all(20),
+                child: Form(
+                  child: ListView(
+                    children: <Widget>[
+                      TextFormField(
+                        controller: _emailController,
+                        decoration: InputDecoration(
+                          icon: Icon(Icons.email),
+                          labelText: 'Email',
                         ),
-                        TextFormField(
-                          controller: _passwordController,
-                          decoration: InputDecoration(
-                            icon: Icon(Icons.lock),
-                            labelText: 'Password',
-                          ),
-                          obscureText: true,
-                          autocorrect: false,
-                          autovalidate: true,
-                          validator: (_) {
-                            return !state.isValidPassword ? 'Invalid Password' : null;
-                          },
+                        keyboardType: TextInputType.emailAddress,
+                        autocorrect: false,
+                        autovalidate: true,
+                        validator: (_) {
+                          return !registerState.isValidEmail ? 'Invalid Email' : null;
+                        },
+                      ),
+                      TextFormField(
+                        controller: _passwordController,
+                        decoration: InputDecoration(
+                          icon: Icon(Icons.lock),
+                          labelText: 'Password',
                         ),
-                        RegisterButton(
+                        obscureText: true,
+                        autocorrect: false,
+                        autovalidate: true,
+                        validator: (_) {
+                          return !registerState.isValidPassword ? 'Invalid Password' : null;
+                        },
+                      ),
+                      Padding(padding: EdgeInsets.only(top: 20),),
+                      RegisterButton(
                           onPressed: () {
-                            if(isRegisterButtonEnabled(state)) {
+                            if(isRegisterButtonEnabled(registerState)) {
                               _registerBloc.add(
                                 RegisterEventPressed(
                                   email: _emailController.text,
@@ -124,13 +98,12 @@ class _RegisterPage extends State<RegisterPage> {
                               );
                             }
                           }
-                        ),
-                      ],
-                    ),
+                      ),
+                    ],
                   ),
-                );
-              },
-            ),
+                ),
+              );
+            },
           ),
         ),
       ),

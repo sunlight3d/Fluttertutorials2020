@@ -41,7 +41,7 @@ class LoginBloc extends Bloc<LoginEvent, LoginState> {
       );
     } else if (loginEvent is LoginEventPasswordChanged) {
       yield state.cloneAndUpdate(
-        isValidPassword: Validations.isValidEmail(loginEvent.password),
+        isValidPassword: Validations.isValidPassword(loginEvent.password),
       );
     } else if (loginEvent is LoginEventWithGooglePressed) {
       try {
@@ -53,9 +53,10 @@ class LoginBloc extends Bloc<LoginEvent, LoginState> {
     } else if (loginEvent is LoginEventWithEmailAndPasswordPressed) {
       yield LoginState.loading();
       try {
-        await _userRepository.signInWithCredentials(loginEvent.email, loginEvent.password);
+        await _userRepository.signInWithEmailAndPassword(loginEvent.email, loginEvent.password);
         yield LoginState.success();
-      } catch (_) {
+      } catch (exception) {
+        print(exception.toString());
         yield LoginState.failure();
       }
     }

@@ -9,12 +9,20 @@ class RegisterButton extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return RaisedButton(
-      shape: RoundedRectangleBorder(
-        borderRadius: BorderRadius.circular(30.0),
+    return ButtonTheme(
+      height: 45,
+      child: RaisedButton(
+        shape: new RoundedRectangleBorder(borderRadius: new BorderRadius.circular(10.0)),
+        color: Colors.green,
+        child: Text(
+          'Register',
+          style: TextStyle(fontSize: 16, color: Colors.white),
+        ),
+        onPressed: (){
+          this._onPressed();
+          Navigator.of(context).pop();
+        },
       ),
-      onPressed: _onPressed,
-      child: Text('Register'),
     );
   }
 }

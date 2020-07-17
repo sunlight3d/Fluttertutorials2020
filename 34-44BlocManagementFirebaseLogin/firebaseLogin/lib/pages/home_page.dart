@@ -18,9 +18,7 @@ class HomePage extends StatelessWidget {
           IconButton(
             icon: Icon(Icons.exit_to_app),
             onPressed: () {
-              BlocProvider.of<AuthenticationBloc>(context).add(
-                AuthenticationEventLoggedOut(),
-              );
+              BlocProvider.of<AuthenticationBloc>(context).add(AuthenticationEventLoggedOut());
             },
           )
         ],
@@ -28,7 +26,7 @@ class HomePage extends StatelessWidget {
       body: Column(
         mainAxisAlignment: MainAxisAlignment.spaceEvenly,
         children: <Widget>[
-          Center(child: Text('Welcome ${firebaseUser.email}!')),
+          Center(child: Text('Welcome ${firebaseUser.email}!', style: TextStyle(fontSize: 20),)),
         ],
       ),
     );

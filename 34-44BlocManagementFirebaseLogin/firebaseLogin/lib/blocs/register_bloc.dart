@@ -52,7 +52,8 @@ class RegisterBloc extends Bloc<RegisterEvent, RegisterState> {
           password: registerEvent.password,
         );
         yield RegisterState.success();
-      } catch (_) {
+      } catch (exception) {
+        print(exception.toString());
         yield RegisterState.failure();
       }
     }

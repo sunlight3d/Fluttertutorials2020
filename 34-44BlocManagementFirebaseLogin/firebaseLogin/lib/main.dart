@@ -29,14 +29,14 @@ class MyApp extends StatelessWidget {
       home: BlocProvider(
         create: (context) => AuthenticationBloc(userRepository: userRepository)..add(AuthenticationEventStarted()),
         child: BlocBuilder<AuthenticationBloc, AuthenticationState>(
-          builder: (context, state){
-            if (state is AuthenticationStateFailure) {
+          builder: (context, authenticationState){
+            if (authenticationState is AuthenticationStateFailure) {
               return BlocProvider<LoginBloc>(
                 create: (context) => LoginBloc(userRepository: userRepository),
                 child: LoginPage(userRepository: userRepository)
               );
-            }else if (state is AuthenticationStateSuccess) {
-              return HomePage(firebaseUser: state.firebaseUser);
+            }else if (authenticationState is AuthenticationStateSuccess) {
+              return HomePage(firebaseUser: authenticationState.firebaseUser);
             }
             return SplashPage();
           },

@@ -7,16 +7,19 @@ import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 class GoogleLoginButton extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    return RaisedButton.icon(
-      shape: RoundedRectangleBorder(
-        borderRadius: BorderRadius.circular(10.0),
+    return ButtonTheme(
+      height: 45,
+      child: RaisedButton.icon(
+        shape: RoundedRectangleBorder(
+          borderRadius: BorderRadius.circular(10.0),
+        ),
+        icon: Icon(FontAwesomeIcons.google, color: Colors.white, size: 17,),
+        onPressed: () {
+          BlocProvider.of<LoginBloc>(context).add(LoginEventWithGooglePressed());
+        },
+        label: Text('Signin with Google', style: TextStyle(color: Colors.white, fontSize: 16)),
+        color: Colors.redAccent,
       ),
-      icon: Icon(FontAwesomeIcons.google, color: Colors.white),
-      onPressed: () {
-        BlocProvider.of<LoginBloc>(context).add(LoginEventWithGooglePressed());
-      },
-      label: Text('SignIn with Google', style: TextStyle(color: Colors.white)),
-      color: Colors.redAccent,
     );
   }
 }

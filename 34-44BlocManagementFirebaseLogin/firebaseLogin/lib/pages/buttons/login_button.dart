@@ -1,20 +1,24 @@
 import 'package:flutter/material.dart';
 
 class LoginButton extends StatelessWidget {
-  final VoidCallback _onPress;
+  final VoidCallback _onPressed;
 
-  LoginButton({Key key, VoidCallback onPress})
-      : _onPress = onPress,
+  LoginButton({Key key, VoidCallback onPressed})
+      : _onPressed = onPressed,
         super(key: key);
 
   @override
   Widget build(BuildContext context) {
-    return RaisedButton(
-      shape: RoundedRectangleBorder(
-        borderRadius: BorderRadius.circular(30.0),
+    return ButtonTheme(
+      height: 45,
+      child: RaisedButton(
+        color: Colors.blue,
+        shape: RoundedRectangleBorder(
+          borderRadius: BorderRadius.circular(10.0),
+        ),
+        onPressed: _onPressed,
+        child: Text('Login to your account', style: TextStyle(color: Colors.white, fontSize: 16),),
       ),
-      onPressed: _onPress,
-      child: Text('Login to your account'),
     );
   }
 }
