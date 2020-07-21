@@ -15,6 +15,14 @@
       },
       "oauth_client": [
         {
+          "client_id": "184556556300-smn9qpnsp169s89usk8cet2jrtm07i6s.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.firebaseLoginBloc",
+            "certificate_hash": "4919cce94b99501aaff21f54091dd7156ba0a6e2"
+          }
+        },
+        {
           "client_id": "184556556300-619p633i30lfq0o1ncc7ngns43oqup6k.apps.googleusercontent.com",
           "client_type": 3
         }
