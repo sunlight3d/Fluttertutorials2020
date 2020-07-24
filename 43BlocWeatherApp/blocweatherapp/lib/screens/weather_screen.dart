@@ -11,7 +11,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 import 'city_selection_screen.dart';
-import 'gradient_container.dart';
 
 class WeatherScreen extends StatefulWidget {
   @override
@@ -97,17 +96,17 @@ class _WeatherScreenState extends State<WeatherScreen> {
                               Text(
                                 weather.location,
                                 style: TextStyle(
-                                  fontSize: 30,
+                                  fontSize: 20,
                                   fontWeight: FontWeight.bold,
                                   color: themeState.textColor
                                 ),
                               ),
+                              Padding(padding: EdgeInsets.symmetric(vertical: 2),),
                               Center(
                                 child: Text(
                                   'Updated: ${TimeOfDay.fromDateTime(weather.lastUpdated).format(context)}',
                                   style: TextStyle(
-                                    fontSize: 18,
-                                    fontWeight: FontWeight.w200,
+                                    fontSize: 16,
                                     color: themeState.textColor
                                   ),
                                 ),

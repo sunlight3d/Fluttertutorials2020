@@ -61,20 +61,26 @@ class TemperatureWidget extends StatelessWidget {
               child: BlocBuilder<SettingsBloc, SettingsState>(
                 builder: (context, settingsState) {
                   return Column(
+                    crossAxisAlignment: CrossAxisAlignment.end,
                     children: [
                       Text(
-                        'min: ${_formattedTemperature(weather.maxTemp, settingsState.temperatureUnit)}',
+                        'min:   ${_formattedTemperature(weather.maxTemp, settingsState.temperatureUnit)}',
                         style: TextStyle(
-                          fontSize: 16,
-                          fontWeight: FontWeight.w100,
+                          fontSize: 14,
                           color: _themeBloc.state.textColor,
                         ),
                       ),
                       Text(
-                        'min: ${_formattedTemperature(weather.minTemp, settingsState.temperatureUnit)}°',
+                        'Temperature:   ${_formattedTemperature(weather.temp, settingsState.temperatureUnit)}',
                         style: TextStyle(
-                          fontSize: 16,
-                          fontWeight: FontWeight.w100,
+                          fontSize: 14,
+                          color: _themeBloc.state.textColor,
+                        ),
+                      ),
+                      Text(
+                        'min:   ${_formattedTemperature(weather.minTemp, settingsState.temperatureUnit)}°',
+                        style: TextStyle(
+                          fontSize: 14,
                           color: _themeBloc.state.textColor,
                         ),
                       )
@@ -84,16 +90,6 @@ class TemperatureWidget extends StatelessWidget {
               ),
             ),
           ],
-        ),
-        Center(
-          child: Text(
-            weather.formattedCondition,
-            style: TextStyle(
-              fontSize: 30,
-              fontWeight: FontWeight.w200,
-              color: Colors.white,
-            ),
-          ),
         ),
       ],
     );

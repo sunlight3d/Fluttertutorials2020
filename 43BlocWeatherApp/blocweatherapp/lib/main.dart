@@ -17,10 +17,7 @@ void main() {
   runApp(MultiBlocProvider(
     providers: [
       BlocProvider<ThemeBloc>(
-        create: (context) {
-          final x = ThemeBloc();
-          return x;
-        },
+        create: (context) => ThemeBloc(),
       ),
       BlocProvider<SettingsBloc>(
         create: (context) => SettingsBloc(),
