@@ -36,13 +36,13 @@ class ThemeBloc extends Bloc<ThemeEvent, ThemeState> {
       case WeatherCondition.sleet:
         themeState = ThemeState(
           backgroundColor: Colors.lightBlue,
-          textColor: Colors.black
+          textColor: Colors.white
         );
         break;
       case WeatherCondition.heavyCloud:
         themeState = ThemeState(
           backgroundColor: Colors.grey,
-          textColor: Colors.white,
+          textColor: Colors.black,
         );
         break;
       case WeatherCondition.heavyRain:
@@ -50,7 +50,7 @@ class ThemeBloc extends Bloc<ThemeEvent, ThemeState> {
       case WeatherCondition.showers:
         themeState = ThemeState(
           backgroundColor: Colors.indigo,
-          textColor: Colors.black,
+          textColor: Colors.white,
         );
         break;
       case WeatherCondition.thunderstorm:
@@ -62,7 +62,7 @@ class ThemeBloc extends Bloc<ThemeEvent, ThemeState> {
       case WeatherCondition.unknown:
         themeState = ThemeState(
           backgroundColor: Colors.lightBlue,
-          textColor: Colors.black,
+          textColor: Colors.white,
         );
         break;
     }

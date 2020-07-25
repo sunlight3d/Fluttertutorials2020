@@ -85,39 +85,37 @@ class _WeatherScreenState extends State<WeatherScreen> {
                       );
                       return _refreshCompleter.future;
                     },
-                    child: ListView(
-                      children: <Widget>[
-                        Container(
-                          decoration: BoxDecoration(
-                            color: themeState.backgroundColor
+                    child: Container(
+                      decoration: BoxDecoration(
+                          color: themeState.backgroundColor
+                      ),
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.center,
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: <Widget>[
+                          Text(
+                            weather.location,
+                            style: TextStyle(
+                                fontSize: 23,
+                                fontWeight: FontWeight.bold,
+                                color: themeState.textColor
+                            ),
                           ),
-                          child: Column(
-                            children: <Widget>[
-                              Text(
-                                weather.location,
-                                style: TextStyle(
+                          Padding(padding: EdgeInsets.symmetric(vertical: 2),),
+                          Center(
+                            child: Text(
+                              'Updated: ${TimeOfDay.fromDateTime(weather.lastUpdated).format(context)}',
+                              style: TextStyle(
                                   fontSize: 20,
-                                  fontWeight: FontWeight.bold,
                                   color: themeState.textColor
-                                ),
                               ),
-                              Padding(padding: EdgeInsets.symmetric(vertical: 2),),
-                              Center(
-                                child: Text(
-                                  'Updated: ${TimeOfDay.fromDateTime(weather.lastUpdated).format(context)}',
-                                  style: TextStyle(
-                                    fontSize: 16,
-                                    color: themeState.textColor
-                                  ),
-                                ),
-                              ),
-                              TemperatureWidget(
-                                weather: weather,
-                              )
-                            ],
+                            ),
                           ),
-                        )
-                      ],
+                          TemperatureWidget(
+                            weather: weather,
+                          )
+                        ],
+                      ),
                     ),
                   );
                 },
