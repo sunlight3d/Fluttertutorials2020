@@ -10,7 +10,7 @@ import 'package:blocweatherapp/states/weather_state.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
-import 'city_selection_screen.dart';
+import 'city_search_screen.dart';
 
 class WeatherScreen extends StatefulWidget {
   @override
@@ -29,7 +29,7 @@ class _WeatherScreenState extends State<WeatherScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('Flutter Weather'),
+        title: Text('WeatherApp Flutter Bloc'),
         actions: <Widget>[
           IconButton(
             icon: Icon(Icons.settings),
@@ -48,7 +48,7 @@ class _WeatherScreenState extends State<WeatherScreen> {
               final city = await Navigator.push(
                 context,
                 MaterialPageRoute(
-                  builder: (context) => CitySelection(),
+                  builder: (context) => CitySearchScreen(),
                 ),
               );
               if (city != null) {
@@ -86,37 +86,38 @@ class _WeatherScreenState extends State<WeatherScreen> {
                       return _refreshCompleter.future;
                     },
                     child: Container(
-                      decoration: BoxDecoration(
-                          color: themeState.backgroundColor
-                      ),
-                      child: Column(
-                        crossAxisAlignment: CrossAxisAlignment.center,
-                        mainAxisAlignment: MainAxisAlignment.center,
+                      color: themeState.backgroundColor,
+                      child: ListView(
                         children: <Widget>[
-                          Text(
-                            weather.location,
-                            style: TextStyle(
-                                fontSize: 23,
-                                fontWeight: FontWeight.bold,
-                                color: themeState.textColor
-                            ),
-                          ),
-                          Padding(padding: EdgeInsets.symmetric(vertical: 2),),
-                          Center(
-                            child: Text(
-                              'Updated: ${TimeOfDay.fromDateTime(weather.lastUpdated).format(context)}',
-                              style: TextStyle(
-                                  fontSize: 20,
-                                  color: themeState.textColor
+                          Column(
+                            children: <Widget>[
+                              Padding(padding: EdgeInsets.symmetric(vertical: 20),),
+                              Text(
+                                weather.location,
+                                style: TextStyle(
+                                    fontSize: 20,
+                                    fontWeight: FontWeight.bold,
+                                    color: themeState.textColor
+                                ),
                               ),
-                            ),
+                              Padding(padding: EdgeInsets.symmetric(vertical: 2),),
+                              Center(
+                                child: Text(
+                                  'Updated: ${TimeOfDay.fromDateTime(weather.lastUpdated).format(context)}',
+                                  style: TextStyle(
+                                      fontSize: 16,
+                                      color: themeState.textColor
+                                  ),
+                                ),
+                              ),
+                              TemperatureWidget(
+                                weather: weather,
+                              )
+                            ],
                           ),
-                          TemperatureWidget(
-                            weather: weather,
-                          )
                         ],
                       ),
-                    ),
+                    )
                   );
                 },
               );
@@ -127,7 +128,7 @@ class _WeatherScreenState extends State<WeatherScreen> {
                 style: TextStyle(color: Colors.red, fontSize: 16),
               );
             }
-            return Center(child: Text('Please Select a Location'));
+            return Center(child: Text('Select a Location !', style: TextStyle(fontSize: 30),));
           },
         ),
       ),
