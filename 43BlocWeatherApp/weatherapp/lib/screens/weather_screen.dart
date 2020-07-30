@@ -9,6 +9,7 @@ import 'package:weatherapp/events/theme_event.dart';
 import 'package:weatherapp/events/weather_event.dart';
 import 'package:weatherapp/screens/city_search_screen.dart';
 import 'package:weatherapp/screens/settings_screen.dart';
+import 'package:weatherapp/screens/temperature_widget.dart';
 import 'package:weatherapp/states/theme_state.dart';
 import 'package:weatherapp/states/weather_state.dart';
 
@@ -111,7 +112,9 @@ class _WeatherScreenState extends State<WeatherScreen> {
                                 ),
                               ),
                               //show more here, put together inside a Widget
-
+                              TemperatureWidget(
+                                weather: weather,
+                              )
                             ],
                           )
                         ],

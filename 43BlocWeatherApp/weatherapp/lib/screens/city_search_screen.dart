@@ -29,6 +29,12 @@ class _CitySearchScreenState extends State<CitySearchScreen> {
                   )
                 ),
               ),
+            ),
+            IconButton(
+              icon: Icon(Icons.search),
+              onPressed: () {
+                Navigator.pop(context, _cityTextController.text);
+              },
             )
           ],
         ),

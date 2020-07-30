@@ -9,10 +9,11 @@ class SettingsBloc extends Bloc<SettingsEvent, SettingsState> {
   Stream<SettingsState> mapEventToState(SettingsEvent settingsEvent) async* {
     if(settingsEvent is SettingsEventToggleUnit) {
       //state = "settings state"
-      yield SettingsState(
-        temperatureUnit: state.temperatureUnit == TemperatureUnit.celsius ?
-            TemperatureUnit.fahrenheit : TemperatureUnit.celsius
+      final newSettingsState = SettingsState(
+          temperatureUnit: state.temperatureUnit == TemperatureUnit.celsius ?
+          TemperatureUnit.fahrenheit : TemperatureUnit.celsius
       );
+      yield newSettingsState;
     }
   }
 }

@@ -15,7 +15,7 @@ class WeatherRepository {
     final response = await this.httpClient.get(locationUrl(city));
     if(response.statusCode == 200) {
       final cities = jsonDecode(response.body) as List;
-      return (cities.first)['woeid'] ?? 0;
+      return (cities.first)['woeid'] ?? Map();
     } else {
       throw Exception('Error getting location id of : ${city}');
     }
@@ -27,7 +27,7 @@ class WeatherRepository {
       throw Exception('Error getting weather from locationId: ${locationId}');
     }
     final weatherJson = jsonDecode(response.body);
-    return Weather.fromJson(response);
+    return Weather.fromJson(weatherJson);
   }
   Future<Weather> getWeatherFromCity(String city) async {
     final int locationId = await getLocationIdFromCity(city);
