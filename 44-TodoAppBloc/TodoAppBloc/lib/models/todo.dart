@@ -29,8 +29,8 @@ class Todo {
     return Todo(
       id: id ?? this.id,
       isCompleted: isCompleted ?? this.isCompleted,
-      taskName:taskName,
-      taskDetail: taskDetail,
+      taskName:taskName ?? this.taskName,
+      taskDetail: taskDetail ?? this.taskDetail,
     );
   }
   @override

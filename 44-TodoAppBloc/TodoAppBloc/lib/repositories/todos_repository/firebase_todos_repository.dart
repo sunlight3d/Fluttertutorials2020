@@ -13,7 +13,8 @@ class FirebaseTodosRepository implements TodosRepository {
 
   @override
   Future<void> addNewTodo(Todo todo) {
-    return todoCollection.add(todo.toJson());
+    final x = todo.toJson();
+    return todoCollection.add(x);
   }
 
   @override

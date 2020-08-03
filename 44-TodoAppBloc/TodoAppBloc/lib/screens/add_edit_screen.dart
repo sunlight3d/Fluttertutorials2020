@@ -2,7 +2,7 @@ import 'package:TodoAppBloc/models/models.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 
-typedef OnSaveCallback = Function(String task, String note);
+typedef OnSaveCallback = Function(String tasksName, String taskDetail);
 
 class AddEditScreen extends StatefulWidget {
   final bool isEditing;
@@ -23,8 +23,8 @@ class AddEditScreen extends StatefulWidget {
 class _AddEditScreenState extends State<AddEditScreen> {
   static final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
 
-  String _task;
-  String _note;
+  String _taskName;
+  String _taskDetail;
 
   bool get isEditing => widget.isEditing;
 
@@ -54,7 +54,7 @@ class _AddEditScreenState extends State<AddEditScreen> {
                 validator: (val) {
                   return val.trim().isEmpty ? 'Please enter some text' : null;
                 },
-                onSaved: (value) => _task = value,
+                onSaved: (value) => _taskName = value,
               ),
               TextFormField(
                 initialValue: isEditing ? widget.todo.taskDetail : '',
@@ -63,7 +63,7 @@ class _AddEditScreenState extends State<AddEditScreen> {
                 decoration: InputDecoration(
                   hintText: 'Additional Notes...',
                 ),
-                onSaved: (value) => _note = value,
+                onSaved: (value) => _taskDetail = value,
               )
             ],
           ),
@@ -75,7 +75,7 @@ class _AddEditScreenState extends State<AddEditScreen> {
         onPressed: () {
           if (_formKey.currentState.validate()) {
             _formKey.currentState.save();
-            widget.onSave(_task, _note);
+            widget.onSave(_taskName, _taskDetail);
             Navigator.pop(context);
           }
         },
