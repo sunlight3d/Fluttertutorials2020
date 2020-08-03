@@ -1,0 +1,55 @@
+{
+  "project_info": {
+    "project_number": "184556556300",
+    "firebase_url": "https://fluttertutorials.firebaseio.com",
+    "project_id": "fluttertutorials",
+    "storage_bucket": "fluttertutorials.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:184556556300:android:c20eeac036dec798795e29",
+        "android_client_info": {
+          "package_name": "com.example.firebaseLoginBloc"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "184556556300-krvc8qd9qcula3cn2gbo1lkei0920fq0.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.firebaseLoginBloc",
+            "certificate_hash": "4919cce94b99501aaff21f54091dd7156ba0a6e2"
+          }
+        },
+        {
+          "client_id": "184556556300-619p633i30lfq0o1ncc7ngns43oqup6k.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCklUxUryvudKxY9Azui27hqm9GdM-YSXo"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "184556556300-619p633i30lfq0o1ncc7ngns43oqup6k.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "184556556300-k3ntlfib7juk629k4c4sd9gm1pc3ip6h.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.example.firebaseLoginBloc"
+              }
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
