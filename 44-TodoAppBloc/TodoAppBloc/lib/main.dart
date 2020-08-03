@@ -29,8 +29,11 @@ class TodosApp extends StatelessWidget {
           create: (context) {
             return AuthenticationBloc(
               userRepository: FirebaseUserRepository(),
-            )..add(AuthenticationEventAppStarted());
+            )..add(AuthenticationEventStarted());
           },
+        ),
+        BlocProvider<TabBloc>(
+          create: (context) => TabBloc(),
         ),
         BlocProvider<TodosBloc>(
           create: (context) {
@@ -49,9 +52,6 @@ class TodosApp extends StatelessWidget {
                 if (authenticationState is AuthenticationStateSuccess) {
                   return MultiBlocProvider(
                     providers: [
-                      BlocProvider<TabBloc>(
-                        create: (context) => TabBloc(),
-                      ),
                       BlocProvider<FilteredTodosBloc>(
                         create: (context) => FilteredTodosBloc(
                           todosBloc: BlocProvider.of<TodosBloc>(context),
@@ -78,7 +78,7 @@ class TodosApp extends StatelessWidget {
             );
           },
           '/addTodo': (context) {
-            return AddEditScreen(
+            return InsertUpdateTodoScreen(
               onSave: (taskName, taskDetail) {
                 BlocProvider.of<TodosBloc>(context).add(
                   TodosEventInsert(Todo(taskName: taskName, taskDetail: taskDetail)),

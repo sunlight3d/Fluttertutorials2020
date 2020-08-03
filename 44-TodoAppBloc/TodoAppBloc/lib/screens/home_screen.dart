@@ -24,7 +24,6 @@ class HomeScreen extends StatelessWidget {
               Navigator.pushNamed(context, '/addTodo');
             },
             child: Icon(Icons.add),
-            tooltip: 'Add Todo',
           ),
           bottomNavigationBar: TabSelector(
             activeTab: activeTab,

@@ -92,7 +92,7 @@ class DetailsScreen extends StatelessWidget {
                     Navigator.of(context).push(
                       MaterialPageRoute(
                         builder: (context) {
-                          return AddEditScreen(
+                          return InsertUpdateTodoScreen(
                             onSave: (taskName, taskDetail) {
                               BlocProvider.of<TodosBloc>(context).add(
                                 TodosEventUpdate(

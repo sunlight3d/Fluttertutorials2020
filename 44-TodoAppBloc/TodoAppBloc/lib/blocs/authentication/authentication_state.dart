@@ -7,7 +7,7 @@ abstract class AuthenticationState extends Equatable {
   List<Object> get props => [];
 }
 
-class AuthenticationStateStarted extends AuthenticationState {}
+class AuthenticationStateInitial extends AuthenticationState {}
 
 class AuthenticationStateSuccess extends AuthenticationState {
   final String userId;
@@ -21,4 +21,7 @@ class AuthenticationStateSuccess extends AuthenticationState {
   String toString() => 'Authenticate success with userId: $userId';
 }
 
-class AuthenticationStateFailed extends AuthenticationState {}
+class AuthenticationStateFailed extends AuthenticationState {
+  final error;
+  AuthenticationStateFailed({this.error});
+}

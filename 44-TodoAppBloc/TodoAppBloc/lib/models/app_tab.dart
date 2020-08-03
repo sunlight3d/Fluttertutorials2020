@@ -1,1 +1,0 @@
-enum MyAppTab { todos, statistics }

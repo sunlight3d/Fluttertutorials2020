@@ -2,14 +2,13 @@ import 'package:TodoAppBloc/models/models.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 
-typedef OnSaveCallback = Function(String tasksName, String taskDetail);
-
-class AddEditScreen extends StatefulWidget {
-  final bool isEditing;
+typedef OnSaveCallback = Function(String tasksName, String taskDetail); //function pointer
+class InsertUpdateTodoScreen extends StatefulWidget {
+  final bool isEditing;//Edit or insert
   final OnSaveCallback onSave;
   final Todo todo;
 
-  AddEditScreen({
+  InsertUpdateTodoScreen({
     Key key,
     @required this.onSave,
     @required this.isEditing,
@@ -17,10 +16,10 @@ class AddEditScreen extends StatefulWidget {
   }) : super(key: key);
 
   @override
-  _AddEditScreenState createState() => _AddEditScreenState();
+  _InsertUpdateTodoScreenState createState() => _InsertUpdateTodoScreenState();
 }
 
-class _AddEditScreenState extends State<AddEditScreen> {
+class _InsertUpdateTodoScreenState extends State<InsertUpdateTodoScreen> {
   static final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
 
   String _taskName;

@@ -13,20 +13,20 @@ class AuthenticationBloc
   AuthenticationBloc({@required UserRepository userRepository})
       : assert(userRepository != null),
         _userRepository = userRepository,
-        super(AuthenticationStateStarted());
+        super(AuthenticationStateInitial());
 
   @override
   Stream<AuthenticationState> mapEventToState(AuthenticationEvent authenticationEvent,) async* {
-    if (authenticationEvent is AuthenticationEventAppStarted) {
+    if (authenticationEvent is AuthenticationEventStarted) {
       try {
-        final isSignedIn = await _userRepository.isAuthenticated();
-        if (!isSignedIn) {
+        final isAuthenticated = await _userRepository.isAuthenticated();
+        if (!isAuthenticated) {
           await _userRepository.authenticate();
         }
         final userId = await _userRepository.getUserId();
         yield AuthenticationStateSuccess(userId);
-      } catch (_) {
-        yield AuthenticationStateFailed();
+      } catch (error) {
+        yield AuthenticationStateFailed(error: error);
       }
     }
   }

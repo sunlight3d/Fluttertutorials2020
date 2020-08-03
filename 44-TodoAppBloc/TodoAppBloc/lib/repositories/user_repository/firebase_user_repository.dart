@@ -14,11 +14,8 @@ class FirebaseUserRepository implements UserRepository {
     return currentUser != null;
   }
 
-  Future<void> authenticate() {
-    return _firebaseAuth.signInAnonymously();
-  }
+  Future<void> authenticate() => _firebaseAuth.signInAnonymously();
 
-  Future<String> getUserId() async {
-    return (await _firebaseAuth.currentUser()).uid;
-  }
+  Future<String> getUserId() async => (await _firebaseAuth.currentUser()).uid;
+
 }
