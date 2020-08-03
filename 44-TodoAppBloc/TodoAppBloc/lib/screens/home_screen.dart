@@ -8,17 +8,17 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 class HomeScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    return BlocBuilder<TabBloc, AppTab>(
+    return BlocBuilder<TabBloc, MyAppTab>(
       builder: (context, activeTab) {
         return Scaffold(
           appBar: AppBar(
             title: Text('Todolist with Firestore,Bloc'),
             actions: [
-              FilterButton(visible: activeTab == AppTab.todos),
+              FilterButton(visible: activeTab == MyAppTab.todos),
               ExtraActions(),
             ],
           ),
-          body: activeTab == AppTab.todos ? FilteredTodos() : StatisticsWidget(),
+          body: activeTab == MyAppTab.todos ? FilteredTodos() : StatisticsWidget(),
           floatingActionButton: FloatingActionButton(
             onPressed: () {
               Navigator.pushNamed(context, '/addTodo');
@@ -29,7 +29,7 @@ class HomeScreen extends StatelessWidget {
           bottomNavigationBar: TabSelector(
             activeTab: activeTab,
             onTabSelected: (tab) =>
-                BlocProvider.of<TabBloc>(context).add(UpdateTab(tab)),
+                BlocProvider.of<TabBloc>(context).add(TabEventChangeTab(tab)),
           ),
         );
       },

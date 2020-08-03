@@ -6,10 +6,10 @@ abstract class FilteredTodosEvent extends Equatable {
   const FilteredTodosEvent();
 }
 
-class UpdateFilter extends FilteredTodosEvent {
+class FilteredTodosEventUpdateFilter extends FilteredTodosEvent {
   final VisibilityFilter filter;
 
-  const UpdateFilter(this.filter);
+  const FilteredTodosEventUpdateFilter(this.filter);
 
   @override
   List<Object> get props => [filter];
@@ -18,10 +18,10 @@ class UpdateFilter extends FilteredTodosEvent {
   String toString() => 'UpdateFilter { filter: $filter }';
 }
 
-class UpdateTodos extends FilteredTodosEvent {
+class FilteredTodosEventUpdateTodos extends FilteredTodosEvent {
   final List<Todo> todos;
 
-  const UpdateTodos(this.todos);
+  const FilteredTodosEventUpdateTodos(this.todos);
 
   @override
   List<Object> get props => [todos];

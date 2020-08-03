@@ -12,72 +12,43 @@ class TodosBloc extends Bloc<TodosEvent, TodosState> {
   TodosBloc({@required TodosRepository todosRepository})
       : assert(todosRepository != null),
         _todosRepository = todosRepository,
-        super(TodosLoading());
+        super(TodosStateLoading());
 
   @override
-  Stream<TodosState> mapEventToState(TodosEvent event) async* {
-    if (event is TodosEventQueryAll) {
-      yield* _mapLoadTodosToState();
-    } else if (event is TodosEventInsert) {
-      yield* _mapAddTodoToState(event);
-    } else if (event is TodosEventUpdate) {
-      yield* _mapUpdateTodoToState(event);
-    } else if (event is TodosEventDelete) {
-      yield* _mapDeleteTodoToState(event);
-    } else if (event is TodosEventToggleAll) {
-      yield* _mapToggleAllToState();
-    } else if (event is TodosEventDeleteAllCompleted) {
-      yield* _mapClearCompletedToState();
-    } else if (event is TodosEventUpdated) {
-      yield* _mapTodosUpdateToState(event);
+  Stream<TodosState> mapEventToState(TodosEvent todosEvent) async* {
+    final todosState = state;
+    if (todosEvent is TodosEventQueryAll) {
+      _todosSubscription?.cancel();
+      _todosSubscription = _todosRepository.todos().listen(
+            (todos) => add(TodosEventUpdated(todos)),
+      );
+    } else if (todosEvent is TodosEventInsert) {
+      _todosRepository.addNewTodo(todosEvent.todo);
+    } else if (todosEvent is TodosEventUpdate) {
+      _todosRepository.updateTodo(todosEvent.todo);
+    } else if (todosEvent is TodosEventDelete) {
+      _todosRepository.deleteTodo(todosEvent.todo);
+    } else if (todosEvent is TodosEventToggleAll) {
+      if (todosState is TodosStateLoaded) {
+        final allCompleted = todosState.todos.every((todo) => todo.isCompleted);
+        final List<Todo> updatedTodos = todosState.todos
+            .map((todo) => todo.copyWith(isCompleted: !allCompleted))
+            .toList();
+        updatedTodos.forEach((updatedTodo) {
+          _todosRepository.updateTodo(updatedTodo);
+        });
+      }
+    } else if (todosEvent is TodosEventDeleteAllCompleted) {
+      if (todosState is TodosStateLoaded) {
+        final List<Todo> completedTodos =
+        todosState.todos.where((todo) => todo.isCompleted).toList();
+        completedTodos.forEach((completedTodo) {
+          _todosRepository.deleteTodo(completedTodo);
+        });
+      }
+    } else if (todosEvent is TodosEventUpdated) {
+      yield TodosStateLoaded(todosEvent.todos);
     }
-  }
-
-  Stream<TodosState> _mapLoadTodosToState() async* {
-    _todosSubscription?.cancel();
-    _todosSubscription = _todosRepository.todos().listen(
-          (todos) => add(TodosEventUpdated(todos)),
-        );
-  }
-
-  Stream<TodosState> _mapAddTodoToState(TodosEventInsert event) async* {
-    _todosRepository.addNewTodo(event.todo);
-  }
-
-  Stream<TodosState> _mapUpdateTodoToState(TodosEventUpdate event) async* {
-    _todosRepository.updateTodo(event.updatedTodo);
-  }
-
-  Stream<TodosState> _mapDeleteTodoToState(TodosEventDelete event) async* {
-    _todosRepository.deleteTodo(event.todo);
-  }
-
-  Stream<TodosState> _mapToggleAllToState() async* {
-    final currentState = state;
-    if (currentState is TodosLoaded) {
-      final allCompleted = currentState.todos.every((todo) => todo.isCompleted);
-      final List<Todo> updatedTodos = currentState.todos
-          .map((todo) => todo.copyWith(isCompleted: !allCompleted))
-          .toList();
-      updatedTodos.forEach((updatedTodo) {
-        _todosRepository.updateTodo(updatedTodo);
-      });
-    }
-  }
-
-  Stream<TodosState> _mapClearCompletedToState() async* {
-    final currentState = state;
-    if (currentState is TodosLoaded) {
-      final List<Todo> completedTodos =
-          currentState.todos.where((todo) => todo.isCompleted).toList();
-      completedTodos.forEach((completedTodo) {
-        _todosRepository.deleteTodo(completedTodo);
-      });
-    }
-  }
-
-  Stream<TodosState> _mapTodosUpdateToState(TodosEventUpdated event) async* {
-    yield TodosLoaded(event.todos);
   }
 
   @override

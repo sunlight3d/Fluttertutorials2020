@@ -1,1 +1,1 @@
-enum AppTab { todos, statistics }
+enum MyAppTab { todos, statistics }

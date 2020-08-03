@@ -23,15 +23,15 @@ class TodosEventInsert extends TodosEvent {
 }
 
 class TodosEventUpdate extends TodosEvent {
-  final Todo updatedTodo;
+  final Todo todo;
 
-  const TodosEventUpdate(this.updatedTodo);
-
-  @override
-  List<Object> get props => [updatedTodo];
+  const TodosEventUpdate(this.todo);
 
   @override
-  String toString() => 'UpdateTodo { updatedTodo: $updatedTodo }';
+  List<Object> get props => [todo];
+
+  @override
+  String toString() => 'UpdateTodo { updatedTodo: $todo }';
 }
 
 class TodosEventDelete extends TodosEvent {

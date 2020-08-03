@@ -5,14 +5,14 @@ abstract class TabEvent extends Equatable {
   const TabEvent();
 }
 
-class UpdateTab extends TabEvent {
-  final AppTab tab;
+class TabEventChangeTab extends TabEvent {
+  final MyAppTab myAppTab;
 
-  const UpdateTab(this.tab);
-
-  @override
-  List<Object> get props => [tab];
+  const TabEventChangeTab(this.myAppTab);
 
   @override
-  String toString() => 'UpdateTab { tab: $tab }';
+  List<Object> get props => [myAppTab];
+
+  @override
+  String toString() => 'UpdateTab { tab: $myAppTab }';
 }

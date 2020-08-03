@@ -11,22 +11,28 @@ class StatisticsBloc extends Bloc<StatisticsEvent, StatisticsState> {
 
   StatisticsBloc({TodosBloc todosBloc})
       : assert(todosBloc != null),
-        super(StatisticsLoading()) {
-    _todosSubscription = todosBloc.listen((state) {
-      if (state is TodosLoaded) {
-        add(UpdateStatistics(state.todos));
+        super(StatisticsStateLoading()) {
+    _todosSubscription = todosBloc.listen((todosState) {
+      if (todosState is TodosStateLoaded) {
+        add(StatisticsEventUpdate(todosState.todos));
       }
     });
   }
 
   @override
-  Stream<StatisticsState> mapEventToState(StatisticsEvent event) async* {
-    if (event is UpdateStatistics) {
-      int numActive =
-          event.todos.where((todo) => !todo.isCompleted).toList().length;
-      int numCompleted =
-          event.todos.where((todo) => todo.isCompleted).toList().length;
-      yield StatisticsLoaded(numActive, numCompleted);
+  Stream<StatisticsState> mapEventToState(StatisticsEvent statisticsEvent) async* {
+    if (statisticsEvent is StatisticsEventUpdate) {
+      int numberOfActiveTodos =
+          statisticsEvent.todos
+              .where((todo) => !todo.isCompleted)
+              .toList()
+              .length;
+      int numberOfCompletedTodo =
+          statisticsEvent.todos
+              .where((todo) => todo.isCompleted)
+              .toList()
+              .length;
+      yield StatisticsEventLoaded(numberOfActiveTodos, numberOfCompletedTodo);
     }
   }
 

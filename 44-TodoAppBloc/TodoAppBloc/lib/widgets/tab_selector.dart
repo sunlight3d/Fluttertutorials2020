@@ -4,8 +4,8 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 
 class TabSelector extends StatelessWidget {
-  final AppTab activeTab;
-  final Function(AppTab) onTabSelected;
+  final MyAppTab activeTab;
+  final Function(MyAppTab) onTabSelected;
 
   TabSelector({
     Key key,
@@ -16,15 +16,15 @@ class TabSelector extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return BottomNavigationBar(
-      currentIndex: AppTab.values.indexOf(activeTab),
-      onTap: (index) => onTabSelected(AppTab.values[index]),
-      items: AppTab.values.map((tab) {
+      currentIndex: MyAppTab.values.indexOf(activeTab),
+      onTap: (index) => onTabSelected(MyAppTab.values[index]),
+      items: MyAppTab.values.map((tab) {
         return BottomNavigationBarItem(
           icon: Icon(
-            tab == AppTab.todos ? Icons.list : Icons.show_chart,
+            tab == MyAppTab.todos ? Icons.list : Icons.show_chart,
           ),
           title: Text(
-            tab == AppTab.statistics ? 'Statistics' : 'Todos',
+            tab == MyAppTab.statistics ? 'Statistics' : 'Todos',
           ),
         );
       }).toList(),

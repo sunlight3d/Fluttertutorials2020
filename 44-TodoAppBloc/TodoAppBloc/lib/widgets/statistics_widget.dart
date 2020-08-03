@@ -9,9 +9,9 @@ class StatisticsWidget extends StatelessWidget {
   Widget build(BuildContext context) {
     return BlocBuilder<StatisticsBloc, StatisticsState>(
       builder: (context, state) {
-        if (state is StatisticsLoading) {
+        if (state is StatisticsStateLoading) {
           return LoadingIndicator();
-        } else if (state is StatisticsLoaded) {
+        } else if (state is StatisticsEventLoaded) {
           return Center(
             child: Column(
               mainAxisAlignment: MainAxisAlignment.center,
@@ -26,7 +26,7 @@ class StatisticsWidget extends StatelessWidget {
                 Padding(
                   padding: EdgeInsets.only(bottom: 24.0),
                   child: Text(
-                    '${state.numCompleted}',
+                    '${state.numberOfCompletedTodos}',
                     style: Theme.of(context).textTheme.subtitle1,
                   ),
                 ),
@@ -40,7 +40,7 @@ class StatisticsWidget extends StatelessWidget {
                 Padding(
                   padding: EdgeInsets.only(bottom: 24.0),
                   child: Text(
-                    "${state.numActive}",
+                    "${state.numberOfActiveTodos}",
                     style: Theme.of(context).textTheme.subtitle1,
                   ),
                 )

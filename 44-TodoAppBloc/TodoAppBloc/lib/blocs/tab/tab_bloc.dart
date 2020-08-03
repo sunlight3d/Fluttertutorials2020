@@ -4,13 +4,13 @@ import 'package:bloc/bloc.dart';
 
 import 'tab_event.dart';
 
-class TabBloc extends Bloc<TabEvent, AppTab> {
-  TabBloc() : super(AppTab.todos);
+class TabBloc extends Bloc<TabEvent, MyAppTab> {
+  TabBloc() : super(MyAppTab.todos);
 
   @override
-  Stream<AppTab> mapEventToState(TabEvent event) async* {
-    if (event is UpdateTab) {
-      yield event.tab;
+  Stream<MyAppTab> mapEventToState(TabEvent event) async* {
+    if (event is TabEventChangeTab) {
+      yield event.myAppTab;
     }
   }
 }
