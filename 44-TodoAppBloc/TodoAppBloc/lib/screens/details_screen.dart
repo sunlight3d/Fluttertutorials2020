@@ -1,4 +1,5 @@
 import 'package:TodoAppBloc/blocs/blocs.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -13,9 +14,19 @@ class DetailsScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return BlocBuilder<TodosBloc, TodosState>(
-      builder: (context, state) {
-        final todo = (state as TodosStateLoaded)
-            .todos
+      builder: (context, todoSState) {
+        if(todoSState is TodosStateLoading) {
+          return Scaffold(
+            body: CircularProgressIndicator(),
+          );
+        } else if(todoSState is TodosStateFailed) {
+          return Scaffold(
+            body: Center(
+              child: Text('Failed to load todos: ${todoSState.error.toString()}'),
+            ),
+          );
+        }
+        final todo = (todoSState as TodosStateLoaded).todos
             .firstWhere((todo) => todo.id == id, orElse: () => null);
         return Scaffold(
           appBar: AppBar(
@@ -38,10 +49,10 @@ class DetailsScreen extends StatelessWidget {
                   child: ListView(
                     children: [
                       Row(
-                        crossAxisAlignment: CrossAxisAlignment.start,
+                        crossAxisAlignment: CrossAxisAlignment.center,
                         children: [
                           Padding(
-                            padding: EdgeInsets.only(right: 8.0),
+                            padding: EdgeInsets.only(right: 5.0),
                             child: Checkbox(
                                 value: todo.isCompleted,
                                 onChanged: (_) {
@@ -56,19 +67,13 @@ class DetailsScreen extends StatelessWidget {
                             child: Column(
                               crossAxisAlignment: CrossAxisAlignment.start,
                               children: [
-                                Hero(
-                                  tag: '${todo.id}__heroTag',
-                                  child: Container(
-                                    width: MediaQuery.of(context).size.width,
-                                    padding: EdgeInsets.only(
-                                      top: 8.0,
-                                      bottom: 16.0,
-                                    ),
-                                    child: Text(
-                                      todo.taskName,
-                                      style:
-                                          Theme.of(context).textTheme.headline5,
-                                    ),
+                                Container(
+                                  width: MediaQuery.of(context).size.width,
+                                  padding: EdgeInsets.symmetric(vertical: 10),
+                                  child: Text(
+                                    todo.taskName,
+                                    style:
+                                    Theme.of(context).textTheme.headline5,
                                   ),
                                 ),
                                 Text(

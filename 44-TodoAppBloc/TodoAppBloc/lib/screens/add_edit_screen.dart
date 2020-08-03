@@ -2,10 +2,10 @@ import 'package:TodoAppBloc/models/models.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 
-typedef OnSaveCallback = Function(String tasksName, String taskDetail); //function pointer
+typedef OnSaveCallbackFunction = Function(String tasksName, String taskDetail); //function pointer
 class InsertUpdateTodoScreen extends StatefulWidget {
   final bool isEditing;//Edit or insert
-  final OnSaveCallback onSave;
+  final OnSaveCallbackFunction onSave;
   final Todo todo;
 
   InsertUpdateTodoScreen({
@@ -29,8 +29,6 @@ class _InsertUpdateTodoScreenState extends State<InsertUpdateTodoScreen> {
 
   @override
   Widget build(BuildContext context) {
-    final textTheme = Theme.of(context).textTheme;
-
     return Scaffold(
       appBar: AppBar(
         title: Text(
@@ -41,43 +39,51 @@ class _InsertUpdateTodoScreenState extends State<InsertUpdateTodoScreen> {
         padding: EdgeInsets.all(16.0),
         child: Form(
           key: _formKey,
-          child: ListView(
-            children: [
-              TextFormField(
-                initialValue: isEditing ? widget.todo.taskName : '',
-                autofocus: !isEditing,
-                style: textTheme.headline5,
-                decoration: InputDecoration(
-                  hintText: 'What needs to be done?',
+          child: Padding(
+            padding: EdgeInsets.all(10),
+            child: ListView(
+              children: [
+                TextFormField(
+                  initialValue: isEditing ? widget.todo.taskName : '',
+                  autofocus: !isEditing,
+                  style: Theme.of(context).textTheme.headline5,
+                  decoration: InputDecoration(
+                    hintText: 'Enter your task\'s name',
+                  ),
+                  validator: (value) {
+                    return value.trim().isEmpty ? 'Enter your task\' name'  : null;
+                  },
+                  onSaved: (value) => _taskName = value,
                 ),
-                validator: (val) {
-                  return val.trim().isEmpty ? 'Please enter some text' : null;
-                },
-                onSaved: (value) => _taskName = value,
-              ),
-              TextFormField(
-                initialValue: isEditing ? widget.todo.taskDetail : '',
-                maxLines: 10,
-                style: textTheme.subtitle1,
-                decoration: InputDecoration(
-                  hintText: 'Additional Notes...',
+                TextFormField(
+                  initialValue: isEditing ? widget.todo.taskDetail : '',
+                  maxLines: 5,
+                  style: Theme.of(context).textTheme.headline6,
+                  decoration: InputDecoration(
+                    hintText: 'Enter your task\'s detail',
+                  ),
+                  onSaved: (value) => _taskDetail = value,
                 ),
-                onSaved: (value) => _taskDetail = value,
-              )
-            ],
-          ),
+                Padding(padding: EdgeInsets.only(top: 15)),
+                RaisedButton(
+                    child: Text(
+                      isEditing ? 'Save changes' : 'Insert Todo',
+                      style: TextStyle(color: Colors.white),
+                    ),
+                    color: Theme.of(context).accentColor,
+                    textColor: Colors.white,
+                    onPressed:() {
+                      if (_formKey.currentState.validate()) {
+                        _formKey.currentState.save();
+                        widget.onSave(_taskName, _taskDetail);
+                        Navigator.pop(context);
+                      }
+                    }
+                )
+              ],
+            ),
+          )
         ),
-      ),
-      floatingActionButton: FloatingActionButton(
-        tooltip: isEditing ? 'Save changes' : 'Add Todo',
-        child: Icon(isEditing ? Icons.check : Icons.add),
-        onPressed: () {
-          if (_formKey.currentState.validate()) {
-            _formKey.currentState.save();
-            widget.onSave(_taskName, _taskDetail);
-            Navigator.pop(context);
-          }
-        },
       ),
     );
   }

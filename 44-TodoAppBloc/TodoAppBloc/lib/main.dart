@@ -45,6 +45,12 @@ class TodosApp extends StatelessWidget {
       ],
       child: MaterialApp(
         title: 'Firestore Todos with Firebase/BLoC',
+        theme: ThemeData(
+          // Define the default brightness and colors.
+          brightness: Brightness.light,
+          primaryColor: Colors.cyan[600],
+          fontFamily: 'Georgia',
+        ),
         routes: {
           '/': (context) {
             return BlocBuilder<AuthenticationBloc, AuthenticationState>(
@@ -69,7 +75,7 @@ class TodosApp extends StatelessWidget {
                 if (authenticationState is AuthenticationStateFailed) {
                   return Center(
                     child: Text(
-                      'Could not authenticate with Firestore',
+                      authenticationState.error.toString(),
                       style: Theme.of(context).textTheme.headline4,),
                   );
                 }

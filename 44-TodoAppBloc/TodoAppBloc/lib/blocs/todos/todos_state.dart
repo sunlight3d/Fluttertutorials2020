@@ -22,4 +22,7 @@ class TodosStateLoaded extends TodosState {
   String toString() => 'TodosStateLoaded, todos: $todos';
 }
 
-class TodosStateFailed extends TodosState {}
+class TodosStateFailed extends TodosState {
+  final error;
+  TodosStateFailed({this.error});
+}
