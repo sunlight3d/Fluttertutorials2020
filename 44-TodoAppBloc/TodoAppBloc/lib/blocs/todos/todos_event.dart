@@ -48,7 +48,7 @@ class TodosEventDelete extends TodosEvent {
 
 class TodosEventDeleteAllCompleted extends TodosEvent {}
 
-class TodosEventToggleAll extends TodosEvent {}
+class TodosEventMakeAllCompleted extends TodosEvent {}
 
 class TodosEventUpdated extends TodosEvent {
   final List<Todo> todos;

@@ -48,7 +48,7 @@ class TodosApp extends StatelessWidget {
         theme: ThemeData(
           // Define the default brightness and colors.
           brightness: Brightness.light,
-          primaryColor: Colors.cyan[600],
+          primaryColor: Colors.green,
           fontFamily: 'Georgia',
         ),
         routes: {

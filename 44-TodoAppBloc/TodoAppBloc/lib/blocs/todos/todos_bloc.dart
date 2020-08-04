@@ -28,14 +28,13 @@ class TodosBloc extends Bloc<TodosEvent, TodosState> {
       _todosRepository.updateTodo(todosEvent.todo);
     } else if (todosEvent is TodosEventDelete) {
       _todosRepository.deleteTodo(todosEvent.todo);
-    } else if (todosEvent is TodosEventToggleAll) {
+    } else if (todosEvent is TodosEventMakeAllCompleted) {
       if (todosState is TodosStateLoaded) {
-        final allCompleted = todosState.todos.every((todo) => todo.isCompleted);
         final List<Todo> updatedTodos = todosState.todos
-            .map((todo) => todo.copyWith(isCompleted: !allCompleted))
+            .map((todo) => todo.copyWith(isCompleted: false))
             .toList();
         updatedTodos.forEach((updatedTodo) {
-          _todosRepository.updateTodo(updatedTodo);
+          _todosRepository.updateTodo(updatedTodo.copyWith(isCompleted: true));
         });
       }
     } else if (todosEvent is TodosEventDeleteAllCompleted) {

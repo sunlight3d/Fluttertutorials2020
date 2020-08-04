@@ -68,7 +68,7 @@ class _InsertUpdateTodoScreenState extends State<InsertUpdateTodoScreen> {
                 RaisedButton(
                     child: Text(
                       isEditing ? 'Save changes' : 'Insert Todo',
-                      style: TextStyle(color: Colors.white),
+                      style: Theme.of(context).textTheme.subtitle1.copyWith(color: Colors.white),
                     ),
                     color: Theme.of(context).accentColor,
                     textColor: Colors.white,

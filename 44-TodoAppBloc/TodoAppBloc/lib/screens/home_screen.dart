@@ -9,16 +9,16 @@ class HomeScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return BlocBuilder<TabBloc, MyAppTab>(
-      builder: (context, activeTab) {
+      builder: (context, selectedTab) {
         return Scaffold(
           appBar: AppBar(
             title: Text('Todolist with Firestore,Bloc'),
             actions: [
-              FilterButton(visible: activeTab == MyAppTab.todos),
-              ExtraActions(),
+              FilterButton(visible: selectedTab == MyAppTab.todos),
+              ExtraButton(),
             ],
           ),
-          body: activeTab == MyAppTab.todos ? FilteredTodos() : StatisticsWidget(),
+          body: selectedTab == MyAppTab.todos ? FilteredTodos() : StatisticsWidget(),
           floatingActionButton: FloatingActionButton(
             onPressed: () {
               Navigator.pushNamed(context, '/addTodo');
@@ -26,7 +26,7 @@ class HomeScreen extends StatelessWidget {
             child: Icon(Icons.add),
           ),
           bottomNavigationBar: TabSelector(
-            activeTab: activeTab,
+            activeTab: selectedTab,
             onTabSelected: (tab) =>
                 BlocProvider.of<TabBloc>(context).add(TabEventChangeTab(tab)),
           ),
