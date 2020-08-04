@@ -9,11 +9,11 @@ abstract class StatisticsState extends Equatable {
 
 class StatisticsStateLoading extends StatisticsState {}
 
-class StatisticsEventLoaded extends StatisticsState {
+class StatisticsStateLoaded extends StatisticsState {
   final int numberOfActiveTodos;
   final int numberOfCompletedTodos;
 
-  const StatisticsEventLoaded(this.numberOfActiveTodos, this.numberOfCompletedTodos);
+  const StatisticsStateLoaded(this.numberOfActiveTodos, this.numberOfCompletedTodos);
 
   @override
   List<Object> get props => [numberOfActiveTodos, numberOfCompletedTodos];

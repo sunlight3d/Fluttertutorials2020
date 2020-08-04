@@ -12,9 +12,12 @@ class StatisticsBloc extends Bloc<StatisticsEvent, StatisticsState> {
   StatisticsBloc({TodosBloc todosBloc})
       : assert(todosBloc != null),
         super(StatisticsStateLoading()) {
+    final statisticsState = state;
     _todosSubscription = todosBloc.listen((todosState) {
       if (todosState is TodosStateLoaded) {
         add(StatisticsEventUpdate(todosState.todos));
+      } else if(todosState is TodosStateLoading) {
+        add(StatisticsEventUpdate([]));
       }
     });
   }
@@ -32,7 +35,7 @@ class StatisticsBloc extends Bloc<StatisticsEvent, StatisticsState> {
               .where((todo) => todo.isCompleted)
               .toList()
               .length;
-      yield StatisticsEventLoaded(numberOfActiveTodos, numberOfCompletedTodo);
+      yield StatisticsStateLoaded(numberOfActiveTodos, numberOfCompletedTodo);
     }
   }
 

@@ -14,7 +14,9 @@ class FilteredTodos extends StatelessWidget {
     return BlocBuilder<FilteredTodosBloc, FilteredTodosState>(
       builder: (context, state) {
         if (state is FilteredTodosLoading) {
-          return LoadingIndicator();
+          return Center(
+            child: CircularProgressIndicator(),
+          );
         } else if (state is FilteredTodosLoaded) {
           final todos = state.filteredTodos;
           return ListView.builder(
