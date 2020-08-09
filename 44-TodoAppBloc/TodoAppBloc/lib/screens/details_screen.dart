@@ -4,7 +4,7 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
-import 'add_edit_screen.dart';
+import 'insert_update_screen.dart';
 
 class DetailsScreen extends StatelessWidget {
   final String id;

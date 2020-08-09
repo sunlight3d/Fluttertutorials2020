@@ -12,7 +12,7 @@ import 'blocs/todos/todos_event.dart';
 import 'models/models.dart';
 import 'repositories/todos_repository/firebase_todos_repository.dart';
 import 'repositories/user_repository/firebase_user_repository.dart';
-import 'screens/add_edit_screen.dart';
+import 'screens/insert_update_screen.dart';
 import 'screens/home_screen.dart';
 
 void main() {
